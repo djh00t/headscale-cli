@@ -68,7 +68,7 @@ jobs:
         id: build
         uses: docker/build-push-action@v4
         with:
-          context: "{{defaultContext}}:k8s/apps/group-03/headscale/cli/docker/"
+          context: "{{defaultContext}}:docker/"
           file: Dockerfile
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -161,7 +161,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           builder: ${{ steps.buildx.outputs.name }}
-          context: "{{defaultContext}}:k8s/apps/group-03/headscale/cli/docker/"
+          context: "{{defaultContext}}:docker/"
           file: Dockerfile
           platforms: linux/amd64,linux/arm64,linux/ppc64le,linux/386,linux/s390x
           push: true
