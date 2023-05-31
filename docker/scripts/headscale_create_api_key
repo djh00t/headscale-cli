@@ -1,0 +1,38 @@
+#!/bin/bash
+###
+### This script creates an API key that enables management of headscale
+###
+NAMESPACE="headscale"
+POD="headscale-0"
+CONTAINER="headscale"
+EXPIRATION=$1
+
+echo 
+
+# Check to make sure that EXPIRATION is set
+if [ -z "$EXPIRATION" ]; then
+    echo "Please provide a value for the number of days the API key should remain valid"
+    echo "Example: headscale_create_api_key 90d"
+    exit 1
+fi
+
+# Create the API key
+echo "Requesting API key.."
+export KEY=$(kubectl exec -it -n ${NAMESPACE} ${POD} -c ${CONTAINER} -- headscale apikeys create --expiration ${EXPIRATION}d)
+echo
+echo "API key created"
+echo -e "Key:\t\t\t${KEY}"
+
+# Get first 10 chars of ${KEY}
+export KEY_SHORT=$(echo ${KEY} | cut -c1-10)
+echo -e "Key short:\t\t${KEY_SHORT}"
+
+# Get expiry date
+export EXPIRY_DATE=$(kubectl exec -it -n ${NAMESPACE} ${POD} -c ${CONTAINER} -- headscale apikeys show ${KEY} | grep ${KEY_SHORT} | awk -F'|' '{ print $3 }')
+
+# Remove leading and trailing whitespace from EXPIRY_DATE
+EXPIRY_DATE=$(echo ${EXPIRY_DATE} | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+
+# Announce expiry date
+echo -e "Your key expires on:\t${EXPIRY_DATE}"
+echo
