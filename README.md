@@ -25,3 +25,5 @@ The following variables exist for the Headscale CLI Tools.
 | HEADSCALE\_CLI\_ADDRESS | "headscale.example.com:50443" | Hostname and Port of Headscale instance you wish to manage. |
 | HEADSCALE\_CLI\_API\_KEY | "abcde12345" | API Key for Headscale instance you wish to manage. |
 | HEADSCALE\_CLI\_INSECURE | "0" | Boolean value telling Headscale CLI Tools if it should use TLS or not. |
+
+
