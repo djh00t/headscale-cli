@@ -7,7 +7,7 @@ POD="headscale-0"
 CONTAINER="headscale"
 EXPIRATION=$1
 
-echo 
+echo ""
 
 # Check to make sure that EXPIRATION is set
 if [ -z "$EXPIRATION" ]; then
